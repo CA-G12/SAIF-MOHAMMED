@@ -3,6 +3,7 @@ import Post from "./components/Post";
 import Comment from "./components/Comment";
 
 import React, { Component } from "react";
+import AddPostForm from "./components/AddPostForm";
 
 export class App extends Component {
   constructor() {
@@ -10,6 +11,7 @@ export class App extends Component {
     this.state = {
       listOfPosts: [],
       isComments: false,
+      isPostFormShown : false,
       id: 0,
       comments: [],
       searchedValue: "",
@@ -17,6 +19,7 @@ export class App extends Component {
       error: "",
     };
   }
+
 
   componentDidMount() {
     fetch("https://jsonplaceholder.typicode.com/posts")
@@ -27,7 +30,7 @@ export class App extends Component {
         return response.json();
       })
       .then((posts) => {
-        posts = posts.slice(0, 5);
+        posts = posts.slice(0, 10);
         this.setState({
           isLoading: false,
         });
@@ -53,12 +56,29 @@ export class App extends Component {
     }
   }
 
+  addPost = (post) => {
+    post.id = Math.random() + Date.now();
+    this.setState({listOfPosts: [post, ...this.state.listOfPosts]})
+  }
+
   handleComments = (id) => {
     this.setState({
       isComments: true,
       id,
     });
   };
+  handlePostForm = () => {
+    this.setState({
+      isComments: false,
+      isPostFormShown: true,
+    });
+  };
+  goHome = () => {
+    this.setState({
+      isComments: false,
+      isPostFormShown: false,
+    });
+  } 
   handleDeletePost = (id) => {
     const FilteredPost = this.state.listOfPosts.filter(
       (post) => post.id !== id
@@ -77,10 +97,13 @@ export class App extends Component {
         <Navbar
           searchedValue={this.state.searchedValue}
           handleSearch={this.handleSearch}
+          handlePostForm={this.handlePostForm}
         />
         {
         this.state.error? <p>{this.state.error}</p> :
-        !this.state.isComments ? (
+        !this.state.isComments ? 
+        this.state.isPostFormShown ? <AddPostForm goHome={this.goHome} addPost={this.addPost}/> : 
+        (
           <section className="posts">
             {this.state.isLoading ? (
               <p>Loading...</p>
@@ -107,9 +130,10 @@ export class App extends Component {
                 ))
             )}
           </section>
-        ) : (
+        ) 
+        : (
           <section className="comments">
-            <button onClick={() => this.setState({ isComments: false })}>
+            <button onClick={this.goHome}>
               Go Home
             </button>
             {this.state.comments.map((comment) => (
