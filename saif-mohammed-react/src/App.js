@@ -1,7 +1,7 @@
 import Navbar from "./components/Navbar";
 import Post from "./components/Post";
 import Comment from "./components/Comment";
-
+import AddCommentForm from "./components/AddCommentForm";
 import React, { Component } from "react";
 import AddPostForm from "./components/AddPostForm";
 
@@ -59,6 +59,10 @@ export class App extends Component {
   addPost = (post) => {
     post.id = Math.random() + Date.now();
     this.setState({listOfPosts: [post, ...this.state.listOfPosts]})
+  }
+  addComment = (comment) => {
+    comment.id = Math.random() + Date.now();
+    this.setState({ comments : [comment, ...this.state.comments] })
   }
 
   handleComments = (id) => {
@@ -136,8 +140,10 @@ export class App extends Component {
             <button onClick={this.goHome}>
               Go Home
             </button>
+            <AddCommentForm addComment = {this.addComment} />
+
             {this.state.comments.map((comment) => (
-              <Comment key={comment.id} comment={comment} />
+              <Comment key={comment.id} comment={comment} addComment = {this.addComment} />
             ))}
           </section>
         )}
