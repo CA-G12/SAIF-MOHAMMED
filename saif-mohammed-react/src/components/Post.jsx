@@ -1,23 +1,16 @@
 import React, { Component } from "react";
 
 class Post extends Component {
-  // constructor(props){
-  //     super(props)
-  //     this.state = {
-  //         isComments: props.isComments
-  //     }
-  // }
+
 
   render() {
-    const { title, body, id } = this.props.post;
+    const { title, body, id,img } = this.props.post;
 
     return (
       <div className="post">
-        <div onClick={() => this.props.handleComments(id)}>
+        <div onClick={() => this.props.handleComments(id)} className="post-info">
           <img
-            src={`https://source.unsplash.com/random/${200 + id}x${
-              200 + id
-            }?islamic`}
+            src={!img ? `https://source.unsplash.com/random/${200 + id}x${200 + id}?islamic`: img}
             alt=""
           />
           <h3 className="title">{title}</h3>

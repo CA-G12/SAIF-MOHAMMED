@@ -7,6 +7,7 @@ class Navbar extends Component {
       <nav className='navbar'>
             <h1>posts</h1>
             <input type="search" placeholder='search' onChange={this.props.handleSearch}/>
+            <button onClick={this.props.handlePostForm}>Add post</button>
       </nav>
     )
   }
