@@ -21,6 +21,7 @@ export class App extends Component {
       isLoading: true,
       error: "",
       commentError: "",
+      currentPost:null
     };
   }
 
@@ -33,7 +34,7 @@ export class App extends Component {
         return response.json();
       })
       .then((posts) => {
-        posts = posts.slice(0, 10);
+        posts = posts.slice(0, 15);
         this.setState({
           isLoading: false,
         });
@@ -148,6 +149,7 @@ export class App extends Component {
             handleDeleteComment={this.handleDeleteComment}
             goHome={this.goHome}
             addComment={this.addComment}
+            post={this.state.listOfPosts.find((post) => post.id === this.state.id)}
           />
         )}
       </div>
