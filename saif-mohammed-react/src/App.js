@@ -1,9 +1,11 @@
 import Navbar from "./components/Navbar";
-import Post from "./components/Post";
-import Comment from "./components/Comment";
-import AddCommentForm from "./components/AddCommentForm";
+// import Post from "./components/Post";
+// import Comment from "./components/Comment";
+// import AddCommentForm from "./components/AddCommentForm";
 import React, { Component } from "react";
 import AddPostForm from "./components/AddPostForm";
+import Posts from "./components/Posts";
+import Comments from "./components/Comments";
 
 export class App extends Component {
   constructor() {
@@ -11,21 +13,22 @@ export class App extends Component {
     this.state = {
       listOfPosts: [],
       isComments: false,
-      isPostFormShown : false,
+      isPostFormShown: false,
       id: 0,
       comments: [],
       searchedValue: "",
+      isLoadingComments: true,
       isLoading: true,
       error: "",
+      commentError: "",
     };
   }
-
 
   componentDidMount() {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((response) => {
         if (response.status !== 200) {
-          throw new Error("Failed to get data from that resources");
+          throw new Error("Failed to get posts from that resources");
         }
         return response.json();
       })
@@ -38,32 +41,43 @@ export class App extends Component {
       })
       .catch((err) => {
         this.setState({
-          error : err.message
-        })
-            });
+          error: err.message,
+        });
+      });
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.id !== prevState.id) {
       fetch(
         `https://jsonplaceholder.typicode.com/posts/${this.state.id}/comments`
       )
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error("Failed to get comments from that resources");
+          }
+          return response.json();
+        })
         .then((data) =>
           this.setState({
+            isLoadingComments: false,
             comments: data,
           })
-        );
+        )
+        .catch((err) => {
+          this.setState({
+            commentError: err.message,
+          });
+        });
     }
   }
 
   addPost = (post) => {
     post.id = Math.random() + Date.now();
-    this.setState({listOfPosts: [post, ...this.state.listOfPosts]})
-  }
+    this.setState({ listOfPosts: [post, ...this.state.listOfPosts] });
+  };
   addComment = (comment) => {
     comment.id = Math.random() + Date.now();
-    this.setState({ comments : [comment, ...this.state.comments] })
-  }
+    this.setState({ comments: [comment, ...this.state.comments] });
+  };
 
   handleComments = (id) => {
     this.setState({
@@ -82,13 +96,22 @@ export class App extends Component {
       isComments: false,
       isPostFormShown: false,
     });
-  } 
+  };
   handleDeletePost = (id) => {
     const FilteredPost = this.state.listOfPosts.filter(
       (post) => post.id !== id
     );
     this.setState({
       listOfPosts: FilteredPost,
+    });
+  };
+
+  handleDeleteComment = (id) => {
+    const FilteredComments = this.state.comments.filter(
+      (comment) => comment.id !== id
+    );
+    this.setState({
+      comments: FilteredComments,
     });
   };
   handleSearch = (e) => {
@@ -104,48 +127,28 @@ export class App extends Component {
           handlePostForm={this.handlePostForm}
         />
         {
-        this.state.error? <p>{this.state.error}</p> :
-        !this.state.isComments ? 
-        this.state.isPostFormShown ? <AddPostForm goHome={this.goHome} addPost={this.addPost}/> : 
-        (
-          <section className="posts">
-            {this.state.isLoading ? (
-              <p>Loading...</p>
-            ) : !this.state.listOfPosts.length ? (
-              <p> No Posts Yet! </p>
-            ) : (
-              this.state.listOfPosts
-                .filter(
-                  (post) =>
-                    post.title
-                      .toLowerCase()
-                      .includes(this.state.searchedValue.toLowerCase()) ||
-                    post.body
-                      .toLowerCase()
-                      .includes(this.state.searchedValue.toLowerCase())
-                )
-                .map((post) => (
-                  <Post
-                    key={post.id}
-                    post={post}
-                    handleComments={this.handleComments}
-                    handleDeletePost={this.handleDeletePost}
-                  />
-                ))
-            )}
-          </section>
-        ) 
-        : (
-          <section className="comments">
-            <button onClick={this.goHome}>
-              Go Home
-            </button>
-            <AddCommentForm addComment = {this.addComment} />
-
-            {this.state.comments.map((comment) => (
-              <Comment key={comment.id} comment={comment} addComment = {this.addComment} />
-            ))}
-          </section>
+           !this.state.isComments ? (
+          this.state.isPostFormShown ? (
+            <AddPostForm goHome={this.goHome} addPost={this.addPost} />
+          ) : (
+            <Posts
+              error={this.state.error}
+              isLoading={this.state.isLoading}
+              listOfPosts={this.state.listOfPosts}
+              searchedValue={this.state.searchedValue}
+              handleDeletePost={this.handleDeletePost}
+              handleComments={this.handleComments}
+            />
+          )
+        ) : (
+          <Comments
+            isLoadingComments={this.state.isLoadingComments}
+            commentError={this.state.commentError}
+            comments={this.state.comments}
+            handleDeleteComment={this.handleDeleteComment}
+            goHome={this.goHome}
+            addComment={this.addComment}
+          />
         )}
       </div>
     );
