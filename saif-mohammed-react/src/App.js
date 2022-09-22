@@ -76,8 +76,13 @@ export class App extends Component {
     this.setState({ listOfPosts: [post, ...this.state.listOfPosts] });
   };
   addComment = (comment) => {
-    comment.id = Math.random() + Date.now();
-    this.setState({ comments: [comment, ...this.state.comments] });
+    if(!comment.body.trim()){
+      alert('check your input please')
+    }else{
+      comment.id = Math.random() + Date.now();
+      this.setState({ comments: [comment, ...this.state.comments] });
+    }
+
   };
 
   handleComments = (id) => {
@@ -110,12 +115,16 @@ export class App extends Component {
   };
 
   handleDeleteComment = (id) => {
-    const FilteredComments = this.state.comments.filter(
-      (comment) => comment.id !== id
-    );
-    this.setState({
-      comments: FilteredComments,
-    });
+
+    if (window.confirm("Are you Sure That you want to delete this post ?")) {
+          const FilteredComments = this.state.comments.filter(
+            (comment) => comment.id !== id
+          );
+          this.setState({
+            comments: FilteredComments,
+          });
+    }
+
   };
   handleSearch = (e) => {
     this.setState({ searchedValue: e.target.value });

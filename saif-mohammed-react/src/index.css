@@ -114,12 +114,10 @@ code {
   align-items: center;
   gap: 20px;
 }
-.user-info .email{
-  
-}
+
 .user-img{
   width: 70px;
-  height: 100%;
+  height: 70px;
   border-radius: 50%;
   margin-bottom: 0%;
 }
