@@ -4,7 +4,7 @@ class Post extends Component {
 
 
   render() {
-    const { title, body, id,img } = this.props.post;
+    const { title, body, id, img } = this.props.post;
 
     return (
  
@@ -12,16 +12,16 @@ class Post extends Component {
       <div className="face face1">
           <div className="content">
               <div className="icon">
-              <button onClick={() => this.props.handleDeletePost(id)}>X</button> 
+              {!this.props.commentFlag && <button onClick={() => this.props.handleDeletePost(id)}>X</button> }
                 <img
-                onClick={() => this.props.handleComments(id)}
+                   onClick={!this.props.commentFlag ? (() => this.props.handleComments(id)) : (() => {})}
                 src={!img ? `https://source.unsplash.com/random/${200 + id}x${200 + id}?islamic`: img}
                 alt=""
               />
               </div>
           </div>
       </div>
-      <div className="face face2" onClick={() => this.props.handleComments(id)}>
+      <div className="face face2"  onClick={!this.props.commentFlag ? (() => this.props.handleComments(id)) : (() => {})}>
           <div className="content">
               <h3> {title}</h3>
               <p>{body}</p>

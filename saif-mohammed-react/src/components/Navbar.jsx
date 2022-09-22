@@ -6,7 +6,7 @@ class Navbar extends Component {
     return (
       <header>
           <nav className='navbar'>
-                <h1 className='logo'>posts</h1>
+                <h1 className='logo'>Islamic</h1>
                 <div className="links">
                   <input type="search" className='search-input' placeholder='search' onChange={this.props.handleSearch}/>
                   <button onClick={this.props.handlePostForm}>Add post</button>

@@ -3,7 +3,7 @@ import Post from "./Post";
 
 class Posts extends Component {
   render() {
-    const {isLoading,listOfPosts,searchedValue,error,handleComments,handleDeletePost,ShowConfirm} = this.props
+    const {isLoading,listOfPosts,searchedValue,error,handleComments,handleDeletePost} = this.props
     return (
         <section className="posts container">
         {

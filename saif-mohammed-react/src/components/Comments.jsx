@@ -16,8 +16,8 @@ class Comments extends Component {
           <p>Loading...</p>
         ) : (
           <>
-            <Post post={post}/>
-            <button onClick={goHome}>Go Home</button>
+            <Post post={post}  commentFlag = {true}/>
+            <button onClick={goHome} className="go-home">Go Home</button>
             <AddCommentForm addComment={addComment} />
             {!comments.length ? (
               <p>No Comments yet</p>
