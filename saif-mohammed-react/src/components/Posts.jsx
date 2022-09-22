@@ -6,7 +6,7 @@ class Posts extends Component {
   render() {
     const {isLoading,listOfPosts,searchedValue,error,handleComments,handleDeletePost} = this.props
     return (
-        <section className="posts">
+        <section className="posts container">
         {
         error ? (<p>{error}</p>) : 
         isLoading ? (
