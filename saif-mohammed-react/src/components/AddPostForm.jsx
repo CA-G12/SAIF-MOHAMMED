@@ -22,8 +22,7 @@ class AddPostForm extends Component {
     return (
         <div className='add-post'>
 
-            <button onClick={this.props.goHome}>Go home</button>
-
+            <button onClick={this.props.goHome} className="go-home">Go home</button>
             <h3 className='add-post-title'>Add post</h3>
             <form>
                     <input required type="text" placeholder='title' onChange={(e) => this.setState({post : {...this.state.post, title: e.target.value} })}/>

@@ -9,9 +9,11 @@ class AddCommentForm extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="add-comment-form">
         <input
+          className="add-comment-input"
           type="text"
+          placeholder="Add comments"
           value={this.state.comment}
           onChange={(e) =>
             this.setState({
@@ -20,6 +22,7 @@ class AddCommentForm extends Component {
           }
         />
         <button
+          className="add-comment-btn"
           onClick={() => {
             this.props.addComment({
               body: this.state.comment,
@@ -31,7 +34,7 @@ class AddCommentForm extends Component {
             });
           }}
         >
-          Add Comment
+          Add
         </button>
       </div>
     );
