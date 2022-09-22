@@ -34,9 +34,9 @@ An Islamic social application to share Islamic information and spread moderate t
 - Heroku
 
 ## live page
-- [Go Live](). 😎
+- [Go Live]('https://poetic-begonia-4fa535.netlify.app/'). 😎
 
 ## BY 👩‍💻👩‍💻
 - [Saif Al-Hayek]('https://poetic-begonia-4fa535.netlify.app/').
-- [Mohammad Balousha](https://github.com/MohammedOmar123).
+- [Mohammad Balousha]('https://github.com/MohammedOmar123').
 
