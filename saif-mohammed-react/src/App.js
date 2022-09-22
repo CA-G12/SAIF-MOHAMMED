@@ -6,7 +6,6 @@ import React, { Component } from "react";
 import AddPostForm from "./components/AddPostForm";
 import Posts from "./components/Posts";
 import Comments from "./components/Comments";
-
 export class App extends Component {
   constructor() {
     super();
@@ -21,7 +20,8 @@ export class App extends Component {
       isLoading: true,
       error: "",
       commentError: "",
-      currentPost:null
+      currentPost: null,
+      confirm: false,
     };
   }
 
@@ -99,12 +99,14 @@ export class App extends Component {
     });
   };
   handleDeletePost = (id) => {
-    const FilteredPost = this.state.listOfPosts.filter(
-      (post) => post.id !== id
-    );
-    this.setState({
-      listOfPosts: FilteredPost,
-    });
+    if (window.confirm("Are you Sure That you want to delete this post ?")) {
+      const FilteredPost = this.state.listOfPosts.filter(
+        (post) => post.id !== id
+      );
+      this.setState({
+        listOfPosts: FilteredPost,
+      });
+    }
   };
 
   handleDeleteComment = (id) => {
@@ -127,8 +129,7 @@ export class App extends Component {
           handleSearch={this.handleSearch}
           handlePostForm={this.handlePostForm}
         />
-        {
-           !this.state.isComments ? (
+        {!this.state.isComments ? (
           this.state.isPostFormShown ? (
             <AddPostForm goHome={this.goHome} addPost={this.addPost} />
           ) : (
@@ -149,7 +150,9 @@ export class App extends Component {
             handleDeleteComment={this.handleDeleteComment}
             goHome={this.goHome}
             addComment={this.addComment}
-            post={this.state.listOfPosts.find((post) => post.id === this.state.id)}
+            post={this.state.listOfPosts.find(
+              (post) => post.id === this.state.id
+            )}
           />
         )}
       </div>

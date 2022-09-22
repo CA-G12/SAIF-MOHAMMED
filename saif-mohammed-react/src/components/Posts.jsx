@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import Post from "./Post";
 
-
 class Posts extends Component {
   render() {
-    const {isLoading,listOfPosts,searchedValue,error,handleComments,handleDeletePost} = this.props
+    const {isLoading,listOfPosts,searchedValue,error,handleComments,handleDeletePost,ShowConfirm} = this.props
     return (
         <section className="posts container">
         {
@@ -34,7 +33,7 @@ class Posts extends Component {
             ))
         )}
       </section>
-    )
+ )
   }
 }
 
