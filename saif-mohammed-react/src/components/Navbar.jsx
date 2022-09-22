@@ -4,11 +4,17 @@ class Navbar extends Component {
 
   render() {
     return (
-      <nav className='navbar'>
-            <h1>posts</h1>
-            <input type="search" placeholder='search' onChange={this.props.handleSearch}/>
-            <button onClick={this.props.handlePostForm}>Add post</button>
-      </nav>
+      <header>
+          <nav className='navbar'>
+                <h1 className='logo'>posts</h1>
+                <div className="links">
+                  <input type="search" className='search-input' placeholder='search' onChange={this.props.handleSearch}/>
+                  <button onClick={this.props.handlePostForm}>Add post</button>
+                </div>
+              
+          </nav>
+      </header>
+
     )
   }
 }
