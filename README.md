@@ -37,6 +37,6 @@ An Islamic social application to share Islamic information and spread moderate t
 - [Go Live](https://poetic-begonia-4fa535.netlify.app/). 😎
 
 ## BY 👩‍💻👩‍💻
-- [Saif Al-Hayek](https://poetic-begonia-4fa535.netlify.app/).
+- [Saif Al-Hayek](https://github.com/SaifHayek).
 - [Mohammad Balousha](https://github.com/MohammedOmar123).
 
